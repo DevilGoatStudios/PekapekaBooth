@@ -17,3 +17,10 @@ src/PekapekaBooth/obj/Debug/PekapekaBooth.csproj.FileListAbsolute.txt
 *.Cache
 src/PekapekaBooth/obj/Release/PekapekaBooth.csproj.FileListAbsolute.txt
 src/PekapekaBooth/obj/Release/PekapekaBooth.Properties.Resources.resources
+bin/Release/AForge.Video.DirectShow.dll
+bin/Release/AForge.Video.DirectShow.xml
+bin/Release/AForge.xml
+bin/Release/AForge.Video.xml
+bin/Release/AForge.dll
+bin/Release/AForge.Video.dll
+bin/Release/PekapekaBooth.exe.config
