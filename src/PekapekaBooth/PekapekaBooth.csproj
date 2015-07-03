@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ButtonsBox\IButtonsBox.cs" />
+    <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Printer\IPrinter.cs" />
     <Compile Include="Program.cs" />
