@@ -12,9 +12,19 @@ namespace PekapekaBooth.Screen
 {
     public partial class ScreenForm : Form
     {
+        private StateMachine mStateMachine;
+
         public ScreenForm()
         {
             InitializeComponent();
+
+            // Fake Camera
+            mStateMachine = new StateMachine(null, null, new Screen(this));
+
+            // Real Camera
+            //mStateMachine = new StateMachine(new WinFormsButtonBox(), new Camera(), new Screen(this));
         }
+
+        public PictureBox GetScreen() { return pictureBox; }
     }
 }
