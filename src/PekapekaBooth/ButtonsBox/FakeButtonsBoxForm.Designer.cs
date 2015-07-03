@@ -1,6 +1,6 @@
-﻿namespace PekapekaBooth.Screen
+﻿namespace PekapekaBooth.ButtonsBox
 {
-    partial class ScreenForm
+    partial class FakeButtonsBoxForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,33 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox
-            // 
-            this.pictureBox.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(260, 237);
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
-            // 
-            // ScreenForm
+            // FakeButtonsBoxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.pictureBox);
-            this.Name = "ScreenForm";
-            this.Text = "ScreenForm";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.ClientSize = new System.Drawing.Size(209, 71);
+            this.Name = "FakeButtonsBoxForm";
+            this.Text = "FakeButtonsBoxForm";
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pictureBox;
     }
 }
