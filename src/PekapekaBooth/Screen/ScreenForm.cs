@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PekapekaBooth.ButtonsBox;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,7 @@ namespace PekapekaBooth.Screen
             InitializeComponent();
 
             // Fake Camera
-            mStateMachine = new StateMachine(null, null, new Screen(this));
+            mStateMachine = new StateMachine(new FakeButtonsBox(), new Camera.Camera(), new Screen(this));
 
             // Real Camera
             //mStateMachine = new StateMachine(new WinFormsButtonBox(), new Camera(), new Screen(this));

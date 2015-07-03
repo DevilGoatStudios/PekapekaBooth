@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace PekapekaBooth.ButtonsBox
 {
-    class FakeButtonsBox : IButtonsBox
+    public class FakeButtonsBox : IButtonsBox
     {
         public event EventHandler ButtonTakePictureClick;
         public event EventHandler ButtonPrintClick;
@@ -17,7 +17,7 @@ namespace PekapekaBooth.ButtonsBox
         private Timer mTimerTakePicture;
         private Timer mTimerPrint;
 
-        FakeButtonsBox()
+        public FakeButtonsBox()
         {
             FakeButtonsBoxForm fakeBoxButtonsForm = new FakeButtonsBoxForm();
             fakeBoxButtonsForm.Show();

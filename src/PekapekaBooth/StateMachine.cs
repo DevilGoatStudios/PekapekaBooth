@@ -38,7 +38,7 @@ namespace PekapekaBooth
 
             mButtonsBox.ButtonTakePictureClick += PressTakePicture;
             mButtonsBox.ButtonPrintClick += PressPrint;
-
+             
             mCamera.NewFrame += CameraNewFrame;
 
             // Default starting state
@@ -86,7 +86,7 @@ namespace PekapekaBooth
         {
             mButtonsBox.FlashTakePictureLight();
             mButtonsBox.TurnOffPrintLight();
-
+            mCamera.Start();
             mCurrentState = State.eIdle;
         }
 

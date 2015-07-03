@@ -22,6 +22,10 @@ namespace PekapekaBooth.Camera
         public Camera()
         {
             mCameras = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+        }
+
+        public void Start()
+        {
             SelectCamera(mCameras[0].MonikerString);
         }
 

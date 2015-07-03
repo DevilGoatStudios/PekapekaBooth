@@ -14,5 +14,6 @@ namespace PekapekaBooth.Camera
         event NewFrameEventHandler NewFrame;
 
         void SetFrameSize(Size size);
+        void Start();
     }
 }
