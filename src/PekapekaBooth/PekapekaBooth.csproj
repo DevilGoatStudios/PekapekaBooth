@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonsBox\FakeButtonsBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ButtonsBox\FakeButtonsBoxForm.Designer.cs">
+      <DependentUpon>FakeButtonsBoxForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ButtonsBox\IButtonsBox.cs" />
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\ICamera.cs" />
@@ -65,6 +71,10 @@
     <Compile Include="Screen\ScreenForm.Designer.cs">
       <DependentUpon>ScreenForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StateMachine.cs" />
+    <EmbeddedResource Include="ButtonsBox\FakeButtonsBoxForm.resx">
+      <DependentUpon>FakeButtonsBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -74,6 +84,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Screen\ScreenForm.resx">
+      <DependentUpon>ScreenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

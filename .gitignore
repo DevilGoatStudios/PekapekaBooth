@@ -24,3 +24,5 @@ bin/Release/AForge.Video.xml
 bin/Release/AForge.dll
 bin/Release/AForge.Video.dll
 bin/Release/PekapekaBooth.exe.config
+src/PekapekaBooth/obj/Release/PekapekaBooth.ButtonsBox.FakeButtonsBoxForm.resources
+src/PekapekaBooth/obj/Release/PekapekaBooth.Screen.ScreenForm.resources
