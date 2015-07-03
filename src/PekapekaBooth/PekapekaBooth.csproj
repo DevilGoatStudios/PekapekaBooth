@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonsBox\FakeButtonsBox.cs" />
     <Compile Include="ButtonsBox\FakeButtonsBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>

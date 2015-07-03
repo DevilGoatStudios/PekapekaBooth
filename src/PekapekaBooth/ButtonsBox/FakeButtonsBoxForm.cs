@@ -17,6 +17,9 @@ namespace PekapekaBooth.ButtonsBox
             InitializeComponent();
         }
 
+        public Button GetButtonTakePicture() { return buttonTakePicture; }
+        public Button GetButtonPrint() { return buttonPrint; }
+
         private void button1_Click(object sender, EventArgs e)
         {
 
