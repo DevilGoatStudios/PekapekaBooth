@@ -40,8 +40,14 @@ namespace PekapekaBooth
             mButtonsBox.ButtonPrintClick += PressPrint;
              
             mCamera.NewFrame += CameraNewFrame;
+            mScreen.Closing += Closing;
 
             // Default starting state
+            SetStateToIdle();
+        }
+
+        private void Closing(object sender, EventArgs e)
+        {
             SetStateToIdle();
         }
 
@@ -76,8 +82,9 @@ namespace PekapekaBooth
             // We only update screen if we are idle OR waiting to print or re-take
             if (mCurrentState == State.eIdle || mCurrentState == State.eCountdown)
             {
-                mCurrentPicture = (Bitmap)eventArgs.Frame.Clone();
-                mScreen.SetImage(mCurrentPicture);
+                    mCurrentPicture = (Bitmap)eventArgs.Frame.Clone();
+                    mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
+                    mScreen.SetImage(mCurrentPicture);
             }
             // Else we do nothing
         }

@@ -27,5 +27,28 @@ namespace PekapekaBooth.Screen
         }
 
         public PictureBox GetScreen() { return pictureBox; }
+
+        private void TriggerFullScreen()
+        {
+            if (FormBorderStyle == FormBorderStyle.None)
+            {
+                FormBorderStyle = FormBorderStyle.SizableToolWindow;
+                WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                FormBorderStyle = FormBorderStyle.None;
+                WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void KeyPressed(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F11)
+            {
+                TriggerFullScreen();
+            }
+        }
+
     }
 }

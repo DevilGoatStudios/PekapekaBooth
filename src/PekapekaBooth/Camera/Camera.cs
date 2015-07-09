@@ -50,7 +50,6 @@ namespace PekapekaBooth.Camera
             CloseVideoSource();
             mVideoSource = new VideoCaptureDevice(camera);
             mVideoSource.NewFrame += new NewFrameEventHandler(NewFrame);
-            mVideoSource.DesiredFrameSize = new Size(320, 240); //To be changed
             mVideoSource.Start();
         }
 

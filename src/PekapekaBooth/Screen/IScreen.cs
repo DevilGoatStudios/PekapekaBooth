@@ -13,5 +13,7 @@ namespace PekapekaBooth.Screen
 
         // Show a 5..4..3..2..1..Click! countdown on-screen (5 sec in total)
         void ShowCountdown();
+
+        event EventHandler Closing;
     }
 }
