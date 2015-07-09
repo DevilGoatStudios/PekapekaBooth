@@ -34,6 +34,7 @@ namespace PekapekaBooth.ButtonsBox
             mSerialPort.WriteTimeout = 500;
 
             mSerialPort.Open();
+            Thread.Sleep(2000);
             //continue  = true;
             //readThread.Start();
         }            
@@ -43,6 +44,7 @@ namespace PekapekaBooth.ButtonsBox
         //
         public void TurnOnTakePictureLight()
         {
+            mSerialPort.WriteLine("4");
         }
         public void TurnOffTakePictureLight()
         {
@@ -50,7 +52,6 @@ namespace PekapekaBooth.ButtonsBox
         }
         public void FlashTakePictureLight()
         {
-            Thread.Sleep(2000);
             mSerialPort.WriteLine("3");
         }
 
@@ -59,6 +60,7 @@ namespace PekapekaBooth.ButtonsBox
         //
         public void TurnOnPrintLight()
         {
+            mSerialPort.WriteLine("7");
         }
         public void TurnOffPrintLight()
         {
@@ -66,6 +68,7 @@ namespace PekapekaBooth.ButtonsBox
         }
         public void FlashPrintLight()
         {
+            mSerialPort.WriteLine("6");
         }
 
         private string SetPortName(string defaultPortName)
