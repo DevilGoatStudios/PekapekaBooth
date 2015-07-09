@@ -46,6 +46,8 @@ namespace PekapekaBooth
 
         private void Closing(object sender, EventArgs e)
         {
+            mButtonsBox.TurnOffTakePictureLight();
+            mButtonsBox.TurnOffPrintLight();
             mCamera.CloseVideoSource();
         }
 

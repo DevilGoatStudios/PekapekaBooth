@@ -46,6 +46,7 @@ namespace PekapekaBooth.ButtonsBox
         }
         public void TurnOffTakePictureLight()
         {
+            mSerialPort.WriteLine("2");
         }
         public void FlashTakePictureLight()
         {
@@ -61,6 +62,7 @@ namespace PekapekaBooth.ButtonsBox
         }
         public void TurnOffPrintLight()
         {
+            mSerialPort.WriteLine("5");
         }
         public void FlashPrintLight()
         {
