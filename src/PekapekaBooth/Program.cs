@@ -14,7 +14,12 @@ namespace PekapekaBooth
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // WinForm ButtonsBox
             Application.Run(new Screen.ScreenForm(new ButtonsBox.FakeButtonsBox(), new Camera.Camera(), null));
+
+            // H/W ButtonsBox
+            //Application.Run(new Screen.ScreenForm(new ButtonsBox.ButtonsBox(), new Camera.Camera(), null));
         }
     }
 }
