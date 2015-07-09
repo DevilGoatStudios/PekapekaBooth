@@ -9,6 +9,7 @@ namespace PekapekaBooth.ButtonsBox
         public event EventHandler ButtonTakePictureClick;
         public event EventHandler ButtonPrintClick;
 
+        private bool mContinue;
         private SerialPort mSerialPort;
 
         public ButtonsBox()
@@ -16,7 +17,7 @@ namespace PekapekaBooth.ButtonsBox
             //string name;
             //string message;
             //StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
-            //Thread readThread = new Thread(Read);
+            Thread readThread = new Thread(Read);
 
             // Create a new SerialPort object with default settings.
             mSerialPort = new SerialPort();
@@ -30,13 +31,13 @@ namespace PekapekaBooth.ButtonsBox
             mSerialPort.Handshake = Handshake.None;
 
             // Set the read/write timeouts
-            mSerialPort.ReadTimeout = 500;
-            mSerialPort.WriteTimeout = 500;
+            mSerialPort.ReadTimeout = 2500;
+            mSerialPort.WriteTimeout = 2500;
 
             mSerialPort.Open();
             Thread.Sleep(2000);
-            //continue  = true;
-            //readThread.Start();
+            mContinue = true;
+            readThread.Start();
         }            
 
         //
@@ -44,15 +45,15 @@ namespace PekapekaBooth.ButtonsBox
         //
         public void TurnOnTakePictureLight()
         {
-            mSerialPort.WriteLine("4");
+            mSerialPort.WriteLine("7");
         }
         public void TurnOffTakePictureLight()
         {
-            mSerialPort.WriteLine("2");
+            mSerialPort.WriteLine("5");
         }
         public void FlashTakePictureLight()
         {
-            mSerialPort.WriteLine("3");
+            mSerialPort.WriteLine("6");
         }
 
         //
@@ -60,15 +61,43 @@ namespace PekapekaBooth.ButtonsBox
         //
         public void TurnOnPrintLight()
         {
-            mSerialPort.WriteLine("7");
+            mSerialPort.WriteLine("4");
         }
         public void TurnOffPrintLight()
         {
-            mSerialPort.WriteLine("5");
+            mSerialPort.WriteLine("2");
         }
         public void FlashPrintLight()
         {
-            mSerialPort.WriteLine("6");
+            mSerialPort.WriteLine("3");
+        }
+
+
+        private void Read()
+        {
+            while (mContinue)
+            {
+                try
+                {
+                    int message = mSerialPort.ReadByte();
+
+                    if (message == 50)
+                    {
+                        if (ButtonTakePictureClick != null)
+                        {
+                            ButtonTakePictureClick(this, EventArgs.Empty);
+                        }
+                    }
+                    else if (message == 49)
+                    {
+                        if (ButtonPrintClick != null)
+                        {
+                            ButtonPrintClick(this, EventArgs.Empty);
+                        }
+                    }
+                }
+                catch (TimeoutException) { }
+            }
         }
 
         private string SetPortName(string defaultPortName)
