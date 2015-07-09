@@ -1,6 +1,7 @@
 ﻿using PekapekaBooth.ButtonsBox;
 using PekapekaBooth.Camera;
 using PekapekaBooth.Printer;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,6 +10,8 @@ namespace PekapekaBooth.Screen
     public partial class ScreenForm : Form,  IScreen
     {
         private StateMachine mStateMachine;
+
+        public event EventHandler Closing;
 
         public ScreenForm(IButtonsBox buttonsBox, ICamera camera, IPrinter printer)
         {
