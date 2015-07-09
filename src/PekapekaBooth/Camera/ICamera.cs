@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace PekapekaBooth.Camera
 {
-    interface ICamera
+    public interface ICamera
     {
         // Event triggered when a new frame from camera is ready
         event NewFrameEventHandler NewFrame;

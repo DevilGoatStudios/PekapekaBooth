@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PekapekaBooth.ButtonsBox
 {
-    interface IButtonsBox
+    public interface IButtonsBox
     {
         // Events triggered when a button is clicked
         event EventHandler ButtonTakePictureClick;
