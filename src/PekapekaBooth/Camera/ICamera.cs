@@ -15,5 +15,6 @@ namespace PekapekaBooth.Camera
 
         void SetFrameSize(Size size);
         void Start();
+        void CloseVideoSource();
     }
 }

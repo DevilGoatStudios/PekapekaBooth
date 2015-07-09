@@ -48,7 +48,7 @@ namespace PekapekaBooth.Camera
             mVideoSource.Start();
         }
 
-        private void CloseVideoSource()
+        public void CloseVideoSource()
         {
             if (!(mVideoSource == null))
                 if (mVideoSource.IsRunning)

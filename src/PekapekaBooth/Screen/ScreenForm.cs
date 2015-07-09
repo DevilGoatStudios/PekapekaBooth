@@ -53,5 +53,10 @@ namespace PekapekaBooth.Screen
             }
         }
 
+        private void ClosingEvent(object sender, FormClosingEventArgs e)
+        {
+            Closing(sender, e);
+        }
+
     }
 }

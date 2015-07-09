@@ -46,7 +46,7 @@ namespace PekapekaBooth
 
         private void Closing(object sender, EventArgs e)
         {
-            SetStateToIdle();
+            mCamera.CloseVideoSource();
         }
 
         // Event handler

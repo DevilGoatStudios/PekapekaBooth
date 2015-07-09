@@ -48,7 +48,7 @@
             this.Controls.Add(this.pictureBox);
             this.Name = "ScreenForm";
             this.Text = "ScreenForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Closing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClosingEvent);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyPressed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
