@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PekapekaBooth.Screen
 {
-    interface IScreen
+    public interface IScreen
     {
         void SetImage(Image image);
 

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using PekapekaBooth;
+using System;
 using System.Windows.Forms;
 
 namespace PekapekaBooth
@@ -15,7 +14,7 @@ namespace PekapekaBooth
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PekapekaBooth.Screen.ScreenForm());
+            Application.Run(new Screen.ScreenForm(new ButtonsBox.FakeButtonsBox(), new Camera.Camera(), null));
         }
     }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AForge.Video;
+﻿using AForge.Video;
 using PekapekaBooth.ButtonsBox;
 using PekapekaBooth.Camera;
 using PekapekaBooth.Printer;
 using PekapekaBooth.Screen;
+using System;
+using System.Drawing;
 
 namespace PekapekaBooth
 {
@@ -22,19 +18,21 @@ namespace PekapekaBooth
     };
     class StateMachine
     {
-        private State mCurrentState;
+        private State  mCurrentState;
         private Bitmap mCurrentPicture; // Last saved frame
 
         private IButtonsBox mButtonsBox;
-        private ICamera mCamera;
-        private IScreen mScreen;
-        private IPrinter mPrinter;
+        private ICamera     mCamera;
+        private IPrinter    mPrinter;
+        private IScreen     mScreen;
+        
 
-        public StateMachine(IButtonsBox buttonsBox, ICamera camera, IScreen screen)
+        public StateMachine(IButtonsBox buttonsBox, ICamera camera, IPrinter printer, IScreen screen)
         {
             mButtonsBox = buttonsBox;
-            mCamera = camera;
-            mScreen = screen;
+            mCamera     = camera;
+            mPrinter    = printer;
+            mScreen     = screen;
 
             mButtonsBox.ButtonTakePictureClick += PressTakePicture;
             mButtonsBox.ButtonPrintClick += PressPrint;

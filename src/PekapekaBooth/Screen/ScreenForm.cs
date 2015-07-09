@@ -1,32 +1,32 @@
 ﻿using PekapekaBooth.ButtonsBox;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using PekapekaBooth.Camera;
+using PekapekaBooth.Printer;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PekapekaBooth.Screen
 {
-    public partial class ScreenForm : Form
+    public partial class ScreenForm : Form,  IScreen
     {
         private StateMachine mStateMachine;
 
-        public ScreenForm()
+        public ScreenForm(IButtonsBox buttonsBox, ICamera camera, IPrinter printer)
         {
             InitializeComponent();
 
-            // Fake Camera
-            mStateMachine = new StateMachine(new FakeButtonsBox(), new Camera.Camera(), new Screen(this));
-
-            // Real Camera
-            //mStateMachine = new StateMachine(new WinFormsButtonBox(), new Camera(), new Screen(this));
+            mStateMachine = new StateMachine(buttonsBox, camera, printer, this);
         }
 
-        public PictureBox GetScreen() { return pictureBox; }
+        public void SetImage(Image image)
+        {
+            pictureBox.Image = image;
+        }
+
+        // Show a 5..4..3..2..1..Click! countdown on-screen (5 sec in total)
+        public void ShowCountdown()
+        {
+            // Doing nothing for now
+        }
 
         private void TriggerFullScreen()
         {

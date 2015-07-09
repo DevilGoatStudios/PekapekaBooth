@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PekapekaBooth.Printer
 {
-    interface IPrinter
+    public interface IPrinter
     {
         void Print(Image image);
     }
