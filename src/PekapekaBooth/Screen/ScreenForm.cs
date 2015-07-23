@@ -22,10 +22,10 @@ namespace PekapekaBooth.Screen
 
         public void SetImage(Image image)
         {
-            float ratio = (float)Size.Height / (float)image.Size.Height;
-            Size newSize = new Size((int)(ratio * image.Size.Width), (int)(ratio * image.Size.Height));
+            //float ratio = (float)Size.Height / (float)image.Size.Height;
+            //Size newSize = new Size((int)(ratio * image.Size.Width), (int)(ratio * image.Size.Height));
 
-            pictureBox.Image = (Image)(new Bitmap(image, newSize));
+            pictureBox.Image = (Bitmap)image.Clone();// (Image)(new Bitmap(image, newSize));
         }
 
         // Show a 5..4..3..2..1..Click! countdown on-screen (5 sec in total)
