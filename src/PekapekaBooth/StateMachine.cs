@@ -135,6 +135,7 @@ namespace PekapekaBooth
             countdown.Enabled = true;
             countdown.Elapsed += (o, i) =>
             {
+                mCamera.StopVideo();
                 mCamera.TakePicture();
                 countdown.Enabled = false;
             };
