@@ -70,11 +70,7 @@
       <DependentUpon>FakeButtonsBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ButtonsBox\IButtonsBox.cs" />
-<<<<<<< HEAD
-=======
     <Compile Include="Camera\NikonD5200.cs" />
-    <Compile Include="Camera\WebCamera.cs" />
->>>>>>> origin/master
     <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Camera\WebCamera.cs" />
     <Compile Include="Printer\FakePrinter.cs" />
