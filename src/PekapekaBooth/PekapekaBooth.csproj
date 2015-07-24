@@ -61,8 +61,9 @@
       <DependentUpon>FakeButtonsBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ButtonsBox\IButtonsBox.cs" />
-    <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="Camera\WebCamera.cs" />
+    <Compile Include="Printer\FakePrinter.cs" />
     <Compile Include="Printer\IPrinter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

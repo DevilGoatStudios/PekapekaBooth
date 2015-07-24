@@ -16,7 +16,7 @@ namespace PekapekaBooth
             Application.SetCompatibleTextRenderingDefault(false);
 
             // WinForm ButtonsBox
-            Application.Run(new Screen.ScreenForm(new ButtonsBox.FakeButtonsBox(), new Camera.Camera(), null));
+            Application.Run(new Screen.ScreenForm(new ButtonsBox.FakeButtonsBox(), new Camera.WebCamera(), null));
 
             // H/W ButtonsBox
             //Application.Run(new Screen.ScreenForm(new ButtonsBox.ButtonsBox(), new Camera.Camera(), null));

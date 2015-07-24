@@ -25,7 +25,24 @@ namespace PekapekaBooth.Screen
             //float ratio = (float)Size.Height / (float)image.Size.Height;
             //Size newSize = new Size((int)(ratio * image.Size.Width), (int)(ratio * image.Size.Height));
 
-            pictureBox.Image = (Bitmap)image.Clone();// (Image)(new Bitmap(image, newSize));
+            Bitmap test = null;
+
+            try
+            {
+                test = (Bitmap)image.Clone();
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
+            try
+            {
+                pictureBox.Image = test; // (Bitmap)image.Clone();// (Image)(new Bitmap(image, newSize));
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
         }
 
         // Show a 5..4..3..2..1..Click! countdown on-screen (5 sec in total)
