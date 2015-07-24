@@ -2,6 +2,6 @@
 *.exe
 *.pdb
 *.Cache
-bin/Release
+/bin
 /src/PekapekaBooth/obj
 bin
