@@ -112,7 +112,10 @@ namespace PekapekaBooth
             mButtonsBox.FlashTakePictureLight();
             mButtonsBox.TurnOffPrintLight();
 
-            mCamera.StartVideo();
+            if (!mCamera.IsVideoOn())
+            {
+                mCamera.StartVideo();
+            }
 
             mCurrentState = State.eIdle;
         }
@@ -126,9 +129,7 @@ namespace PekapekaBooth
             if (!mCamera.IsVideoOn())
             {
                 mCamera.StartVideo();
-            }
-
-            mCurrentState = State.eCountdown;
+            }  
 
             System.Timers.Timer countdown = new System.Timers.Timer(5000);
             countdown.Enabled = true;
@@ -137,6 +138,8 @@ namespace PekapekaBooth
                 mCamera.TakePicture();
                 countdown.Enabled = false;
             };
+
+            mCurrentState = State.eCountdown;
         }
 
         private void SetStateToPrintOrReTakePicture()
