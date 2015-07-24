@@ -40,8 +40,13 @@
     <Reference Include="AForge.Video.DirectShow">
       <HintPath>..\..\lib\AForge.NET Framework-2.2.5\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
+    <Reference Include="nikoncswrapper">
+      <HintPath>..\..\lib\Nikon C# Wrapper-1.8\nikoncswrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +55,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ButtonsBox\ButtonsBox.cs" />
@@ -61,6 +67,7 @@
       <DependentUpon>FakeButtonsBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ButtonsBox\IButtonsBox.cs" />
+    <Compile Include="Camera\NikonD5200.cs" />
     <Compile Include="Camera\WebCamera.cs" />
     <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Printer\IPrinter.cs" />
