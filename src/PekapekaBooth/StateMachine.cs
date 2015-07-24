@@ -5,6 +5,7 @@ using PekapekaBooth.Printer;
 using PekapekaBooth.Screen;
 using System;
 using System.Drawing;
+using System.Threading;
 
 namespace PekapekaBooth
 {
@@ -25,6 +26,7 @@ namespace PekapekaBooth
         private ICamera     mCamera;
         private IPrinter    mPrinter;
         private IScreen     mScreen;
+        private static Mutex mLocked;
         
 
         public StateMachine(IButtonsBox buttonsBox, ICamera camera, IPrinter printer, IScreen screen)
@@ -33,6 +35,7 @@ namespace PekapekaBooth
             mCamera     = camera;
             mPrinter    = printer;
             mScreen     = screen;
+            mLocked = new Mutex();
 
             mButtonsBox.ButtonTakePictureClick += PressTakePicture;
             mButtonsBox.ButtonPrintClick += PressPrint;
@@ -79,20 +82,23 @@ namespace PekapekaBooth
         // Event handler
         private void CameraNewVideoFrame(Image image)
         {
-            // When receiving new frame from camera (live stream)
-            // We only update screen if we are idle OR Countdown
-            if (mCurrentState == State.eIdle || mCurrentState == State.eCountdown)
-            {
-                mCurrentPicture = (Bitmap)image.Clone();
-                mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
-                mScreen.SetImage(mCurrentPicture);
-            }
-            // Else we do nothing
+            mLocked.WaitOne();
+                // When receiving new frame from camera (live stream)
+                // We only update screen if we are idle OR Countdown
+                if (mCurrentState == State.eIdle || mCurrentState == State.eCountdown)
+                {
+                    mCurrentPicture = (Bitmap)image.Clone();
+                    mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
+                    mScreen.SetImage(mCurrentPicture);
+                }
+                // Else we do nothing
+                mLocked.ReleaseMutex();
         }
 
         // Event handler
         private void CameraPictureImage(Image image)
         {
+            mLocked.WaitOne();
             // When receiving new picture from camera (still image)
             // We only update screen if we are in Countdown
             if (mCurrentState == State.eCountdown)
@@ -104,6 +110,7 @@ namespace PekapekaBooth
                 SetStateToPrintOrReTakePicture();
             }
             // Else we do nothing
+            mLocked.ReleaseMutex();
         }
 
 
@@ -112,7 +119,10 @@ namespace PekapekaBooth
             mButtonsBox.FlashTakePictureLight();
             mButtonsBox.TurnOffPrintLight();
 
-            mCamera.StartVideo();
+            if (!mCamera.IsVideoOn())
+            {
+                mCamera.StartVideo();
+            }
 
             mCurrentState = State.eIdle;
         }
@@ -126,9 +136,7 @@ namespace PekapekaBooth
             if (!mCamera.IsVideoOn())
             {
                 mCamera.StartVideo();
-            }
-
-            mCurrentState = State.eCountdown;
+            }  
 
             System.Timers.Timer countdown = new System.Timers.Timer(5000);
             countdown.Enabled = true;
@@ -138,6 +146,8 @@ namespace PekapekaBooth
                 mCamera.TakePicture();
                 countdown.Enabled = false;
             };
+
+            mCurrentState = State.eCountdown;
         }
 
         private void SetStateToPrintOrReTakePicture()

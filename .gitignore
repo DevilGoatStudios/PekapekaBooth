@@ -4,3 +4,4 @@
 *.Cache
 bin/Release
 /src/PekapekaBooth/obj
+bin

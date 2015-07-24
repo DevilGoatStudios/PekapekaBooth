@@ -21,11 +21,11 @@ namespace PekapekaBooth.Camera
             mCameras = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
             // Setting up timers for faking video stream
-            mTimerVideoStream = new System.Timers.Timer(32);
+            mTimerVideoStream = new System.Timers.Timer(16);
             mTimerVideoStream.Enabled = false;
             mTimerVideoStream.Elapsed += (o, i) =>
             {
-                if (mCurrentImage != null)
+                if (mCurrentImage != null && mTimerVideoStream.Enabled)
                 {
                     NewVideoFrame(mCurrentImage);
                 }

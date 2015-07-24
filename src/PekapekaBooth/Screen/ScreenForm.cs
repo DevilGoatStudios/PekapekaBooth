@@ -22,22 +22,13 @@ namespace PekapekaBooth.Screen
 
         public void SetImage(Image image)
         {
-            //float ratio = (float)Size.Height / (float)image.Size.Height;
-            //Size newSize = new Size((int)(ratio * image.Size.Width), (int)(ratio * image.Size.Height));
-
-            Bitmap test = null;
+            Image picture = (Image)image.Clone();
+            float ratio = (float)Size.Height / (float)picture.Size.Height;
+            Size newSize = new Size((int)(ratio * picture.Size.Width), (int)(ratio * picture.Size.Height));
 
             try
             {
-                test = (Bitmap)image.Clone();
-            }
-            catch (Exception e)
-            {
-                e.ToString();
-            }
-            try
-            {
-                pictureBox.Image = test; // (Bitmap)image.Clone();// (Image)(new Bitmap(image, newSize));
+                pictureBox.Image = (Image)(new Bitmap(picture, newSize));
             }
             catch (Exception e)
             {
