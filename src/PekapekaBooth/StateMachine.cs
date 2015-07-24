@@ -37,7 +37,8 @@ namespace PekapekaBooth
             mButtonsBox.ButtonTakePictureClick += PressTakePicture;
             mButtonsBox.ButtonPrintClick += PressPrint;
              
-            mCamera.NewFrame += CameraNewFrame;
+            mCamera.NewVideoFrame += CameraNewVideoFrame;
+            mCamera.NewPictureImage += CameraPictureImage;
             mScreen.Closing += Closing;
 
             // Default starting state
@@ -48,7 +49,7 @@ namespace PekapekaBooth
         {
             mButtonsBox.TurnOffTakePictureLight();
             mButtonsBox.TurnOffPrintLight();
-            mCamera.CloseVideoSource();
+            mCamera.Shutdown();
         }
 
         // Event handler
@@ -76,24 +77,43 @@ namespace PekapekaBooth
         }
 
         // Event handler
-        private void CameraNewFrame(object sender, NewFrameEventArgs eventArgs)
+        private void CameraNewVideoFrame(Image image)
         {
             // When receiving new frame from camera (live stream)
-            // We only update screen if we are idle OR waiting to print or re-take
+            // We only update screen if we are idle OR Countdown
             if (mCurrentState == State.eIdle || mCurrentState == State.eCountdown)
             {
-                    mCurrentPicture = (Bitmap)eventArgs.Frame.Clone();
-                    mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
-                    mScreen.SetImage(mCurrentPicture);
+                mCurrentPicture = (Bitmap)image.Clone();
+                mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
+                mScreen.SetImage(mCurrentPicture);
             }
             // Else we do nothing
         }
+
+        // Event handler
+        private void CameraPictureImage(Image image)
+        {
+            // When receiving new picture from camera (still image)
+            // We only update screen if we are in Countdown
+            if (mCurrentState == State.eCountdown)
+            {
+                mCurrentPicture = (Bitmap)image.Clone();
+                mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
+                mScreen.SetImage(mCurrentPicture);
+
+                SetStateToPrintOrReTakePicture();
+            }
+            // Else we do nothing
+        }
+
 
         private void SetStateToIdle()
         {
             mButtonsBox.FlashTakePictureLight();
             mButtonsBox.TurnOffPrintLight();
-            mCamera.Start();
+
+            mCamera.StartVideo();
+
             mCurrentState = State.eIdle;
         }
 
@@ -103,14 +123,19 @@ namespace PekapekaBooth
             mButtonsBox.TurnOffPrintLight();
             mScreen.ShowCountdown();
 
+            if (!mCamera.IsVideoOn())
+            {
+                mCamera.StartVideo();
+            }
+
             mCurrentState = State.eCountdown;
 
-            System.Timers.Timer toto = new System.Timers.Timer(5000);
-            toto.Enabled = true;
-            toto.Elapsed += (o, i) =>
+            System.Timers.Timer countdown = new System.Timers.Timer(5000);
+            countdown.Enabled = true;
+            countdown.Elapsed += (o, i) =>
             {
-                SetStateToPrintOrReTakePicture();
-                toto.Enabled = false;
+                mCamera.TakePicture();
+                countdown.Enabled = false;
             };
         }
 
