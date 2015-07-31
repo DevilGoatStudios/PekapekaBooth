@@ -31,7 +31,16 @@ namespace PekapekaBooth.Camera
         {
             if (mDLSRCamera != null)
             {
-                mDLSRCamera.LiveViewEnabled = true;
+                try
+                {
+                    mDLSRCamera.LiveViewEnabled = true;
+                }
+                catch (NikonException ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.Message);
+                    mManager.Shutdown();
+                    mManager = null;
+                }
             }
             mTimerVideoStream.Enabled = true;
         }
@@ -47,7 +56,7 @@ namespace PekapekaBooth.Camera
 
         public bool IsVideoOn()
         {
-            if (mDLSRCamera != null)
+            if (mManager != null && mDLSRCamera != null)
             {
                 return mDLSRCamera.LiveViewEnabled && mTimerVideoStream.Enabled;
             }
@@ -59,12 +68,18 @@ namespace PekapekaBooth.Camera
 
         public void TakePicture()
         {
-            //NewPictureImage(mCurrentImage);
+            if (mManager != null && mDLSRCamera != null)
+            {
+                mDLSRCamera.Capture();
+            }
         }
 
         public void Shutdown()
         {
             mManager.Shutdown();
+            mManager = null;
+            mDLSRCamera = null;
+            mTimerVideoStream.Enabled = false;
         }
 
         public NikonD5200()
@@ -72,50 +87,96 @@ namespace PekapekaBooth.Camera
             try
             {
                 mManager = new NikonManager("Type0009.md3");
-                mManager.DeviceAdded += ManagerDeviceAdded;
+                mManager.DeviceAdded   += ManagerDeviceAdded;
+                mManager.DeviceRemoved += ManagerDeviceRemoved;
 
-                // Setting up timers for faking video stream
-                mTimerVideoStream = new System.Timers.Timer(32);
+                // Setting up timers for video stream
+                // Every 60 ms, we will poke the Nikon for a new video frame
+                mTimerVideoStream = new System.Timers.Timer(60);
                 mTimerVideoStream.Enabled = false;
-                mTimerVideoStream.Elapsed += (o, i) =>
-                {
-                    if (mDLSRCamera != null && IsVideoOn())
-                    {
-                        NikonLiveViewImage liveViewImage = mDLSRCamera.GetLiveViewImage();
-
-                        if (liveViewImage != null)
-                        {
-                            JpegBitmapDecoder decoder = new JpegBitmapDecoder(new MemoryStream(liveViewImage.JpegBuffer), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-
-                            BitmapFrame frame = decoder.Frames[0];
-
-                            using (MemoryStream outStream = new MemoryStream())
-                            {
-                                BitmapEncoder enc = new BmpBitmapEncoder();
-
-                                enc.Frames.Add(BitmapFrame.Create(frame));
-                                enc.Save(outStream);
-                                Bitmap bitmap = new System.Drawing.Bitmap(outStream);
-
-                                NewVideoFrame(bitmap);
-                            }
-                        }
-                    }
-                };
+                mTimerVideoStream.Elapsed += TimerVideoStreamElapsed;
             }
             catch (NikonException ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
-                //Console.WriteLine(ex.Message);
             }
         }
 
+        // Event handler
         private void ManagerDeviceAdded(NikonManager sender, NikonDevice device)
         {
-            if (mDLSRCamera == null && device != null)
+            if (mManager != null && device != null)
             {
                 mDLSRCamera = device;
+                device.ImageReady += device_ImageReady;
                 StartVideo();
+            }
+        }
+
+        // Event handler
+        private void ManagerDeviceRemoved(NikonManager sender, NikonDevice device)
+        {
+            if (mManager != null && device != null)
+            {
+                StopVideo();
+                mDLSRCamera = null;
+            }
+        }
+
+        // Event handler
+        private void TimerVideoStreamElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (mManager != null && mDLSRCamera != null && IsVideoOn())
+            {
+                NikonLiveViewImage liveViewImage = null;
+
+                try
+                {
+                    liveViewImage = mDLSRCamera.GetLiveViewImage();
+                }
+                catch (NikonException ex)
+                {
+                    System.Windows.Forms.MessageBox.Show("Failed to get live view image: " + ex.ToString());
+                }
+
+                if (liveViewImage != null)
+                {
+                    JpegBitmapDecoder decoder = new JpegBitmapDecoder(new MemoryStream(liveViewImage.JpegBuffer), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+
+                    BitmapFrame frame = decoder.Frames[0];
+
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        BitmapEncoder enc = new BmpBitmapEncoder();
+
+                        enc.Frames.Add(BitmapFrame.Create(frame));
+                        enc.Save(outStream);
+                        Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+
+                        NewVideoFrame(bitmap);
+                    }
+                }
+            }
+        }
+        // Event handler
+        private void device_ImageReady(NikonDevice sender, NikonImage image)
+        {
+            if (mManager != null && mDLSRCamera != null && image  != null && image.Type == NikonImageType.Jpeg)
+            {
+                JpegBitmapDecoder decoder = new JpegBitmapDecoder(new MemoryStream(image.Buffer), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+
+                BitmapFrame frame = decoder.Frames[0];
+
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    BitmapEncoder enc = new BmpBitmapEncoder();
+
+                    enc.Frames.Add(BitmapFrame.Create(frame));
+                    enc.Save(outStream);
+                    Bitmap bitmap = new System.Drawing.Bitmap(outStream);
+
+                    NewPictureImage(bitmap);
+                }
             }
         }
     }

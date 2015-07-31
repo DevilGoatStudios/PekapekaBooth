@@ -11,7 +11,7 @@ namespace PekapekaBooth
 {
     public enum State
     {                         //                ----==== Outputs ====----
-                                // Button TakePicture | Button Print | Screen
+                              // Button TakePicture | Button Print | Screen
         eIdle,                //    Flashing        |   Off        |  Live video feed
         eCountdown,           //    On              |   Off        |  Live video feed + 5..4..3..2..1..Click!
         ePrintOrReTakePicture,//    Flashing        |   Flashing   |  Still image taken
