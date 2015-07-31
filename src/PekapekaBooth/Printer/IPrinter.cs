@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace PekapekaBooth.Printer
 {
+    public delegate void FinishPrintingEventHandler();
+
     public interface IPrinter
     {
-        void Print(Image image);
+        event FinishPrintingEventHandler FinishPrinting; // Triggered the printer finish to print
+
+        void Print(Image imageToPrint);
     }
 }

@@ -21,6 +21,7 @@ namespace PekapekaBooth
     {
         private State  mCurrentState;
         private Bitmap mCurrentPicture; // Last saved frame
+        private string mLastFileName; // Last saved frame
 
         private IButtonsBox mButtonsBox;
         private ICamera     mCamera;
@@ -43,6 +44,7 @@ namespace PekapekaBooth
             mCamera.NewVideoFrame += CameraNewVideoFrame;
             mCamera.NewPictureImage += CameraPictureImage;
             mScreen.Closing += Closing;
+            mPrinter.FinishPrinting += PrintEnd;
 
             // Default starting state
             SetStateToIdle();
@@ -105,6 +107,8 @@ namespace PekapekaBooth
             {
                 mCurrentPicture = (Bitmap)image.Clone();
                 mCurrentPicture.RotateFlip(RotateFlipType.Rotate180FlipY);
+                mLastFileName = "c:\\temp\\" + DateTime.Now.ToString("h-mm-ss") + ".png";
+                mCurrentPicture.Save(mLastFileName, System.Drawing.Imaging.ImageFormat.Png);
                 mScreen.SetImage(mCurrentPicture);
 
                 SetStateToPrintOrReTakePicture();
@@ -174,6 +178,11 @@ namespace PekapekaBooth
                 SetStateToIdle();
                 toto.Enabled = false;
             };
+        }
+
+        private void PrintEnd()
+        {
+            SetStateToIdle();
         }
     }
 }

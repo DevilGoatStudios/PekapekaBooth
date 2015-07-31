@@ -75,6 +75,7 @@
     <Compile Include="Camera\WebCamera.cs" />
     <Compile Include="Printer\FakePrinter.cs" />
     <Compile Include="Printer\IPrinter.cs" />
+    <Compile Include="Printer\Printer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen\IScreen.cs" />
